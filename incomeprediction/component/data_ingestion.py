@@ -36,16 +36,19 @@ class DataIngestion:
         try:
             raw_data_dir = self.data_ingestion_config.raw_data_dir
             file_name = os.listdir(raw_data_dir)[0]
-            housing_file_path = os.path.join(raw_data_dir,file_name)
-            logging.info(f"Reading csv file: [{housing_file_path}]")
-            housing_data_frame = pd.read_csv(housing_file_path)
+            incompred_file_path = os.path.join(raw_data_dir,file_name)
+            logging.info(f"Reading csv file: [{incompred_file_path}]")
+            incompred_data_frame = pd.read_csv(incompred_file_path)
 
             logging.info(f"Splitting data into train and test")
             strat_train_set = None
             strat_test_set = None
-            strat_train_set = housing_data_frame.iloc[:,:-1]
-            strat_test_set = housing_data_frame.iloc[:,-1]
-            X_train, X_test, y_train, y_test = train_test_split(strat_train_set, strat_test_set, test_size=0.3, random_state=42)
+
+            split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+            for train_index,test_index in split.split(incompred_data_frame, incompred_data_frame["salary"]):
+                strat_train_set = incompred_data_frame.loc[train_index].drop(["salary"],axis=1)
+                strat_test_set = incompred_data_frame.loc[test_index].drop(["salary"],axis=1)
+            #X_train, X_test, y_train, y_test = train_test_split(strat_train_set, strat_test_set, test_size=0.3, random_state=42)
             train_file_path = os.path.join(self.data_ingestion_config.ingested_train_dir,
                                             file_name)
 
@@ -54,12 +57,12 @@ class DataIngestion:
             if strat_train_set is not None:
                 os.makedirs(self.data_ingestion_config.ingested_train_dir,exist_ok=True)
                 logging.info(f"Exporting training datset to file: [{train_file_path}]")
-                X_train.to_csv(train_file_path,index=False)
+                strat_train_set.to_csv(train_file_path,index=False)
 
             if strat_test_set is not None:
                 os.makedirs(self.data_ingestion_config.ingested_test_dir, exist_ok= True)
                 logging.info(f"Exporting test dataset to file: [{test_file_path}]")
-                X_test.to_csv(test_file_path,index=False)
+                strat_test_set.to_csv(test_file_path,index=False)
 
             data_ingestion_artifact = DataIngestionArtifact(train_file_path=train_file_path,
                                 test_file_path=test_file_path,
