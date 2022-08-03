@@ -11,7 +11,7 @@ def main():
 
         #pipeline = Pipeline()
         #pipeline.run_pipeline()
-        data_ingestion_config = configuration().get_data_ingestion_config
+        data_ingestion_config = configuration().get_data_ingestion_config()
         print(data_ingestion_config)
            
     except Exception as e:
