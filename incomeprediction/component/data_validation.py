@@ -27,8 +27,8 @@ class DataValidation:
     def get_train_and_test_df(self):
         try:
            
-            train_df = self.data_ingestion_artifact.train_file_path
-            test_df = self.data_ingestion_artifact.test_file_path
+            train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
+            test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
             return train_df,test_df
         except Exception as e:
             raise incomepredictionexception (e,sys) from e
