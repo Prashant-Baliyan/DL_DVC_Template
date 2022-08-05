@@ -21,8 +21,8 @@ class DataIngestion:
     def download_housing_data(self,) -> str:
         try:
             #extraction remote url to download dataset
-            logging.info(f"Downloading file from :[{download_url}]")
             download_url = self.data_ingestion_config.dataset_download_url
+            logging.info(f"Downloading file from :[{download_url}]")
             raw_data_dir = self.data_ingestion_config.raw_data_dir
             if os.path.exists(raw_data_dir):
                 os.remove(raw_data_dir)
@@ -41,25 +41,41 @@ class DataIngestion:
             incompred_data_frame = pd.read_csv(incompred_file_path)
 
             logging.info(f"Splitting data into train and test")
-            strat_train_set = None
-            strat_test_set = None
+            X = incompred_data_frame.iloc[:,:-1]
+            Y = incompred_data_frame.iloc[:,-1]
 
-            split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
-            for train_index,test_index in split.split(incompred_data_frame, incompred_data_frame["salary"]):
-                strat_train_set = incompred_data_frame.loc[train_index].drop(["salary"],axis=1)
-                strat_test_set = incompred_data_frame.loc[test_index].drop(["salary"],axis=1)
-            #X_train, X_test, y_train, y_test = train_test_split(strat_train_set, strat_test_set, test_size=0.3, random_state=42)
+            X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=42)
+
+            y_train_new = pd.DataFrame(y_train)
+            x_frame = [X_train,y_train_new]
+
+            strat_train_set = pd.concat(x_frame)
+
+            
+            y_test_new = pd.DataFrame(y_test)
+            y_frame = [X_test,y_test_new]
+
+            strat_test_set = pd.concat(y_frame)
+
+            #     strat_train_set = incompred_data_frame.loc[train_index].drop(["salary"],axis=1)
+            #     strat_test_set = incompred_data_frame.loc[test_index].drop(["salary"],axis=1)
+            
+            
             train_file_path = os.path.join(self.data_ingestion_config.ingested_train_dir,
                                             file_name)
 
             test_file_path = os.path.join(self.data_ingestion_config.ingested_test_dir,
                                         file_name)
             if strat_train_set is not None:
+                if os.path.exists(self.data_ingestion_config.ingested_train_dir):
+                   os.remove(self.data_ingestion_config.ingested_train_dir)
                 os.makedirs(self.data_ingestion_config.ingested_train_dir,exist_ok=True)
                 logging.info(f"Exporting training datset to file: [{train_file_path}]")
                 strat_train_set.to_csv(train_file_path,index=False)
 
             if strat_test_set is not None:
+                if os.path.exists(self.data_ingestion_config.ingested_test_dir):
+                   os.remove(self.data_ingestion_config.ingested_test_dir)               
                 os.makedirs(self.data_ingestion_config.ingested_test_dir, exist_ok= True)
                 logging.info(f"Exporting test dataset to file: [{test_file_path}]")
                 strat_test_set.to_csv(test_file_path,index=False)
@@ -81,3 +97,7 @@ class DataIngestion:
             return self.split_data_as_train_test()
         except Exception as e:
             raise incomepredictionexception(e,sys) from e 
+
+
+    def __del__(self):
+        logging.info(f"{'>>'*20}Data Ingestion log completed.{'<<'*20} \n\n")

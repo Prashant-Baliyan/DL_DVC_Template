@@ -40,28 +40,34 @@ class Pipeline():
         except Exception as e:
             raise incomepredictionexception(e, sys) from e
 
-    def start_data_validation(self, data_ingestion_artifact:DataIngestionArtifact,)->DataValidationArtifact:
-        try:
-            data_validation = DataValidation(data_validation_config=self.config.get_data_validation_config(),
-                                             data_ingestion_artifact=data_ingestion_artifact
-                                             )
-            return data_validation.initiate_data_validation()
-        except Exception as e:
-            raise incomepredictionexception (e,sys) from e
+    # def start_data_validation(self, data_ingestion_artifact:DataIngestionArtifact,)->DataValidationArtifact:
+    #     try:
+    #         data_validation = DataValidation(data_validation_config=self.config.get_data_validation_config(),
+    #                                          data_ingestion_artifact=data_ingestion_artifact
+    #                                          )
+    #         return data_validation.initiate_data_validation()
+    #     except Exception as e:
+    #         raise incomepredictionexception (e,sys) from e
 
-    def start_data_transformation(self,
-                                  data_ingestion_artifact: DataIngestionArtifact,
-                                  data_validation_artifact: DataValidationArtifact
-                                  ) -> DataTransformationArtifact:
+    # def start_data_transformation(self,
+    #                               data_ingestion_artifact: DataIngestionArtifact,
+    #                               data_validation_artifact: DataValidationArtifact
+    #                               ) -> DataTransformationArtifact:
+    #     try:
+    #         data_transformation = datatransformation(
+    #             data_transformation_config=self.config.get_data_transformation_config(),
+    #             data_ingestion_artifact=data_ingestion_artifact,
+    #             data_validation_artifact=data_validation_artifact
+    #         )
+    #         return data_transformation.initiate_data_transformation()
+    #     except Exception as e:
+    #         raise incomepredictionexception(e, sys)
+
+    def run(self):
         try:
-            data_transformation = datatransformation(
-                data_transformation_config=self.config.get_data_transformation_config(),
-                data_ingestion_artifact=data_ingestion_artifact,
-                data_validation_artifact=data_validation_artifact
-            )
-            return data_transformation.initiate_data_transformation()
+            self.run_pipeline()
         except Exception as e:
-            raise incomepredictionexception(e, sys)
+            raise e
 
 
     
