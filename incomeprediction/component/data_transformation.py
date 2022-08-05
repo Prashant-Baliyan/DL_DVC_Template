@@ -16,28 +16,29 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder
 from imblearn.over_sampling import RandomOverSampler 
 
+# class datatransformation():
+#     def __init__(self,data_transformation_config: DataTransformationConfig,
+#                  data_ingestion_artifact: DataIngestionArtifact,
+#                  data_validation_artifact: DataValidationArtifact
+#                  ):
+#         try:
+#             logging.info(f"{'>>' * 30}Data Transformation log started.{'<<' * 30} ")
+#             self.data_transformation_config= data_transformation_config
+#             self.data_ingestion_artifact = data_ingestion_artifact
+#             self.data_validation_artifact = data_validation_artifact
+#         except Exception as e:
+#             raise incomepredictionexception (e,sys) from e
+
 class datatransformation():
-    def __init__(self,data_transformation_config: DataTransformationConfig,
-                 data_ingestion_artifact: DataIngestionArtifact,
-                 data_validation_artifact: DataValidationArtifact
-                 ):
+    def __init__(self,data_validation_artifact: DataValidationArtifact,
+                data_ingestion_artifact: DataIngestionArtifact,
+                data_transformation_config: DataTransformationConfig):
         try:
             logging.info(f"{'>>' * 30}Data Transformation log started.{'<<' * 30} ")
-            self.data_transformation_config= data_transformation_config
-            self.data_ingestion_artifact = data_ingestion_artifact
             self.data_validation_artifact = data_validation_artifact
-        except Exception as e:
-            raise incomepredictionexception (e,sys) from e
-
-class dftransformation():
-    def __init__(self):
-        try:
-            schema_file_path = self.data_validation_artifact.schema_file_path
-            dataset_schema = read_yaml_file(file_path=schema_file_path)
-            categorical_columns = dataset_schema[CATEGORICAL_COLUMN_KEY]
-            for col in categorical_columns:
-                    le = LabelEncoder()
-                    col = le.fit_transform(col.astype(str))
+            self.data_ingestion_artifact = data_ingestion_artifact
+            self.data_transformation_config= data_transformation_config
+            self.schema_file_path = self.data_validation_artifact.schema_file_path
         except Exception as e:
             raise incomepredictionexception (e,sys) from e
 
@@ -46,6 +47,14 @@ class dftransformation():
             train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
             schema_file_path = self.data_validation_artifact.schema_file_path
             dataset_schema = read_yaml_file(file_path=schema_file_path)
+
+            for col in train_df.columns:
+                if train_df[col] == 'object':
+                    le = LabelEncoder()
+                    train_df[col] = le.fit_transform(train_df[col].astype(str))
+                else:
+                    pass
+
             threshold = dataset_schema[THRESHOLD_KEY]
             col_corr = []
             corr_matrix = train_df.corr()
@@ -61,8 +70,9 @@ class dftransformation():
     def feature_selection(self):
         try:
             train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
-            col_corr = dftransformation.is_correlation_exist()
-            train_df.drop(col_corr,axis=1)
+            if col_corr is not None:
+                col_corr = datatransformation.is_correlation_exist()
+                train_df.drop(col_corr,axis=1)
         except Exception as e:
             raise incomepredictionexception (e,sys) from e
     
@@ -101,8 +111,7 @@ class dftransformation():
 
 
             num_pipeline = Pipeline(steps=[
-                ('imputer', SimpleImputer(strategy="mode")),
-                ("labelencoder", dftransformation())
+                ('imputer', SimpleImputer(strategy="mode"))
                 ('scaler', StandardScaler())
             ]
             )
@@ -128,6 +137,10 @@ class dftransformation():
 
     def initiate_data_transformation(self)->DataTransformationArtifact:
         try:
+            self.is_correlation_exist()
+            self.feature_selection()
+            self.handling_imbalance_data()
+
             logging.info(f"Obtaining preprocessing object.")
             preprocessing_obj = self.get_data_transformer_object()
 
