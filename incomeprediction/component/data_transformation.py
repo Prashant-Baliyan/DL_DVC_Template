@@ -42,46 +42,60 @@ class datatransformation():
         except Exception as e:
             raise incomepredictionexception (e,sys) from e
 
-    def is_correlation_exist(self):
-        try:
-            train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
-            schema_file_path = self.data_validation_artifact.schema_file_path
-            dataset_schema = read_yaml_file(file_path=schema_file_path)
+    # def remove_null_values(self):
+    #     try:
+    #         train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
+    #         train_df = train_df.replace('?', np.nan)
 
-            for col in train_df.columns:
-                if train_df[col] == 'object':
-                    le = LabelEncoder()
-                    train_df[col] = le.fit_transform(train_df[col].astype(str))
-                else:
-                    pass
+    #         null_columns = train_df.loc[:, train_df.isnull().any()].columns.to_list()
+    #         if null_columns is not None:
+    #             train_df[null_columns] = train_df[null_columns].fillna(train_df.mode().iloc[0])
+    #         return train_df
+    #     except Exception as e:
+    #         raise incomepredictionexception (e,sys) from e
 
-            threshold = dataset_schema[THRESHOLD_KEY]
-            col_corr = []
-            corr_matrix = train_df.corr()
-            for i in range(len(corr_matrix.columns)):
-                for j in range(i):
-                    if abs(corr_matrix.iloc[i,j])> threshold:
-                        colname = corr_matrix.columns[i]
-                        col_corr.append(colname)
-            return col_corr
-        except Exception as e:
-            raise incomepredictionexception (e,sys) from e
+    # def is_correlation_exist(self):
+    #     try: 
+    #         #train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
+    #         schema_file_path = self.data_validation_artifact.schema_file_path
+    #         dataset_schema = read_yaml_file(file_path=schema_file_path)
+    #         new_df = self.remove_null_values()
 
-    def feature_selection(self):
-        try:
-            train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
-            if col_corr is not None:
-                col_corr = datatransformation.is_correlation_exist()
-                train_df.drop(col_corr,axis=1)
-        except Exception as e:
-            raise incomepredictionexception (e,sys) from e
+    #         for col in new_df.columns:
+    #             if new_df[col].dtype == 'object':
+    #                 le = LabelEncoder()
+    #                 new_df[col] = le.fit_transform(new_df[col].astype(str))
+    #             else:
+    #                 pass
+    #         threshold = dataset_schema[THRESHOLD_KEY]
+    #         col_corr = set()
+    #         corr_matrix = new_df.corr()
+    #         for i in range(len(corr_matrix.columns)):
+    #             for j in range(i):
+    #                 if abs(corr_matrix.iloc[i,j])> threshold:
+    #                     colname = corr_matrix.columns[i]
+    #                     col_corr.add(colname)
+    #                     new_df.drop(col_corr,axis=1)
+    #         return new_df          
+    #     except Exception as e:
+    #         raise incomepredictionexception (e,sys) from e
+
+    # def feature_scaling(self):
+    #     try:
+    #         #train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
+    #         new_df = self.is_correlation_exist()
+    #         scaler = StandardScaler()
+    #         scaled_data = scaler.fit_transform(new_df)
+    #         scaled_df = pd.DataFrame(scaled_data)
+    #         return scaled_df
+    #     except Exception as e:
+    #         raise incomepredictionexception (e,sys) from e
     
     def handling_imbalance_data(self):
         try:
             rs = RandomOverSampler(random_state=30)
             train_file_path = self.data_ingestion_artifact.train_file_path
             test_file_path = self.data_ingestion_artifact.test_file_path
-
             schema_file_path = self.data_validation_artifact.schema_file_path
 
             train_df = load_data(file_path=train_file_path, schema_file_path=schema_file_path)
@@ -91,12 +105,13 @@ class datatransformation():
             schema = read_yaml_file(file_path=schema_file_path)
             target_column_name = schema[TARGET_COLUMN_KEY]
             logging.info(f"Splitting input and target feature from training and testing dataframe.")
-            input_feature_train_df = train_df.drop(columns=[target_column_name],axis=1)
+            input_feature_X_df = train_df.drop(columns=[target_column_name],axis=1)
             
-            input_feature_test_df = test_df.drop(columns=[target_column_name],axis=1)
+            input_feature_Y_df = test_df[target_column_name]
             
-            rs.fit(input_feature_train_df,input_feature_test_df)
-            rs.fit_resample(input_feature_train_df, input_feature_test_df)
+            # rs.fit(input_feature_X_df,input_feature_Y_df)
+            X_new,y_new_df = rs.fit_resample(input_feature_X_df, input_feature_Y_df)
+            return y_new_df
         except Exception as e:
             raise incomepredictionexception(e,sys) from e
 
@@ -111,14 +126,14 @@ class datatransformation():
 
 
             num_pipeline = Pipeline(steps=[
-                ('imputer', SimpleImputer(strategy="mode"))
+                ('imputer', SimpleImputer(strategy="median")),
                 ('scaler', StandardScaler())
             ]
             )
 
             cat_pipeline = Pipeline(steps=[
                  ('impute', SimpleImputer(strategy="most_frequent")),
-                 ('one_hot_encoder', OneHotEncoder()),
+                 ('one_hot_encoder', LabelEncoder()),
                  ('scaler', StandardScaler(with_mean=False))
             ]
             )
@@ -137,33 +152,35 @@ class datatransformation():
 
     def initiate_data_transformation(self)->DataTransformationArtifact:
         try:
-            self.is_correlation_exist()
-            self.feature_selection()
-            self.handling_imbalance_data()
+            #self.feature_scaling()
+            #balance_train_df = self.handling_imbalance_data()
 
             logging.info(f"Obtaining preprocessing object.")
             preprocessing_obj = self.get_data_transformer_object()
 
             logging.info(f"Obtaining training and test file path.")
+
             train_file_path = self.data_ingestion_artifact.train_file_path
             test_file_path = self.data_ingestion_artifact.test_file_path
 
             schema_file_path = self.data_validation_artifact.schema_file_path
 
             train_df = load_data(file_path=train_file_path, schema_file_path=schema_file_path)
+            new_train_df = train_df.replace('?', np.nan)
             
             test_df = load_data(file_path=test_file_path, schema_file_path=schema_file_path)
+            new_test_df = test_df.replace('?', np.nan)
 
             schema = read_yaml_file(file_path=schema_file_path)
 
             target_column_name = schema[TARGET_COLUMN_KEY]
 
             logging.info(f"Splitting input and target feature from training and testing dataframe.")
-            input_feature_train_df = train_df.drop(columns=[target_column_name],axis=1)
-            target_feature_train_df = train_df[target_column_name]
+            input_feature_train_df = new_train_df.drop(columns=[target_column_name],axis=1)
+            target_feature_train_df = new_train_df[target_column_name]
 
-            input_feature_test_df = test_df.drop(columns=[target_column_name],axis=1)
-            target_feature_test_df = test_df[target_column_name]
+            input_feature_test_df = new_test_df.drop(columns=[target_column_name],axis=1)
+            target_feature_test_df = new_test_df[target_column_name]
 
             input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)

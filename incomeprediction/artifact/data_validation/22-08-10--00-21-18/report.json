@@ -1,0 +1,986 @@
+{
+      "data_drift": {
+            "name": "data_drift",
+            "datetime": "2022-08-10 00:21:22.905744",
+            "data": {
+                  "utility_columns": {
+                        "date": null,
+                        "id": null,
+                        "target": null,
+                        "prediction": null
+                  },
+                  "cat_feature_names": [
+                        "country",
+                        "education",
+                        "marital-status",
+                        "occupation",
+                        "race",
+                        "relationship",
+                        "salary",
+                        "sex",
+                        "workclass"
+                  ],
+                  "num_feature_names": [
+                        "age",
+                        "capital-gain",
+                        "capital-loss",
+                        "education-num",
+                        "fnlwgt",
+                        "hours-per-week"
+                  ],
+                  "datetime_feature_names": [],
+                  "target_names": null,
+                  "options": {
+                        "confidence": null,
+                        "drift_share": 0.5,
+                        "nbinsx": 10,
+                        "xbins": null
+                  },
+                  "metrics": {
+                        "n_features": 15,
+                        "n_drifted_features": 0,
+                        "share_drifted_features": 0.0,
+                        "dataset_drift": false,
+                        "age": {
+                              "current_small_hist": [
+                                    [
+                                          0.023305479872731325,
+                                          0.02455348691766098,
+                                          0.026081944983923154,
+                                          0.024974163449659727,
+                                          0.017486121180081814,
+                                          0.011091837893700654,
+                                          0.006590599001313916,
+                                          0.0017387963322615402,
+                                          0.0008133079618642705,
+                                          0.0003505637766656338
+                                    ],
+                                    [
+                                          17.0,
+                                          24.3,
+                                          31.6,
+                                          38.9,
+                                          46.2,
+                                          53.5,
+                                          60.8,
+                                          68.1,
+                                          75.4,
+                                          82.7,
+                                          90.0
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          0.023488174173105676,
+                                          0.024876548849151588,
+                                          0.02517105256831285,
+                                          0.026337046884992076,
+                                          0.016347961553441013,
+                                          0.010818503969188905,
+                                          0.006761564980743065,
+                                          0.0022358241536323694,
+                                          0.0006971924780143961,
+                                          0.00025243175928107444
+                                    ],
+                                    [
+                                          17.0,
+                                          24.3,
+                                          31.6,
+                                          38.9,
+                                          46.2,
+                                          53.5,
+                                          60.8,
+                                          68.1,
+                                          75.4,
+                                          82.7,
+                                          90.0
+                                    ]
+                              ],
+                              "feature_type": "num",
+                              "stattest_name": "Wasserstein distance (normed)",
+                              "drift_score": 0.01180702539919274,
+                              "drift_detected": false
+                        },
+                        "capital-gain": {
+                              "current_small_hist": [
+                                    [
+                                          9.767729983574787e-05,
+                                          1.504775002709593e-06,
+                                          2.1496785752994194e-07,
+                                          2.047312928856589e-08,
+                                          1.0236564644282945e-08,
+                                          0.0,
+                                          0.0,
+                                          0.0,
+                                          0.0,
+                                          5.732476200798445e-07
+                                    ],
+                                    [
+                                          0.0,
+                                          9999.9,
+                                          19999.8,
+                                          29999.699999999997,
+                                          39999.6,
+                                          49999.5,
+                                          59999.399999999994,
+                                          69999.3,
+                                          79999.2,
+                                          89999.09999999999,
+                                          99999.0
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          9.761856130319815e-05,
+                                          1.6233928573051964e-06,
+                                          2.8957818535714325e-07,
+                                          1.316264478896105e-08,
+                                          4.387548262987017e-09,
+                                          0.0,
+                                          0.0,
+                                          0.0,
+                                          0.0,
+                                          4.5191747108766243e-07
+                                    ],
+                                    [
+                                          0.0,
+                                          9999.9,
+                                          19999.8,
+                                          29999.699999999997,
+                                          39999.6,
+                                          49999.5,
+                                          59999.399999999994,
+                                          69999.3,
+                                          79999.2,
+                                          89999.09999999999,
+                                          99999.0
+                                    ]
+                              ],
+                              "feature_type": "num",
+                              "stattest_name": "Wasserstein distance (normed)",
+                              "drift_score": 0.016565228253649415,
+                              "drift_detected": false
+                        },
+                        "capital-loss": {
+                              "current_small_hist": [
+                                    [
+                                          0.0021969854417578667,
+                                          7.049905150576103e-07,
+                                          9.39987353410147e-07,
+                                          2.7259633248894275e-05,
+                                          5.1934301275910647e-05,
+                                          1.66847755230301e-05,
+                                          9.399873534101474e-07,
+                                          0.0,
+                                          0.0,
+                                          2.3499683835253685e-07
+                                    ],
+                                    [
+                                          0.0,
+                                          435.6,
+                                          871.2,
+                                          1306.8000000000002,
+                                          1742.4,
+                                          2178.0,
+                                          2613.6000000000004,
+                                          3049.2000000000003,
+                                          3484.8,
+                                          3920.4,
+                                          4356.0
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          0.0021860972274195412,
+                                          1.4101253770675256e-06,
+                                          1.7122951007248524e-06,
+                                          3.474951822059261e-05,
+                                          5.6203568600262825e-05,
+                                          1.369836080579881e-05,
+                                          1.0072324121910901e-06,
+                                          0.0,
+                                          6.04339447314654e-07,
+                                          2.0144648243821802e-07
+                                    ],
+                                    [
+                                          0.0,
+                                          435.6,
+                                          871.2,
+                                          1306.8000000000002,
+                                          1742.4,
+                                          2178.0,
+                                          2613.6000000000004,
+                                          3049.2000000000003,
+                                          3484.8,
+                                          3920.4,
+                                          4356.0
+                                    ]
+                              ],
+                              "feature_type": "num",
+                              "stattest_name": "Wasserstein distance (normed)",
+                              "drift_score": 0.02043115117222038,
+                              "drift_detected": false
+                        },
+                        "education-num": {
+                              "current_small_hist": [
+                                    [
+                                          0.003753369502166718,
+                                          0.0070290374313303995,
+                                          0.024772238714300336,
+                                          0.01938103524755178,
+                                          0.03302965161906712,
+                                          0.21714948647080903,
+                                          0.1777049851571297,
+                                          0.021564813866994232,
+                                          0.14276452724605043,
+                                          0.019517521411266933
+                                    ],
+                                    [
+                                          1.0,
+                                          2.5,
+                                          4.0,
+                                          5.5,
+                                          7.0,
+                                          8.5,
+                                          10.0,
+                                          11.5,
+                                          13.0,
+                                          14.5,
+                                          16.0
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          0.004797004797004797,
+                                          0.006727506727506728,
+                                          0.023312273312273313,
+                                          0.018983268983268985,
+                                          0.03287703287703288,
+                                          0.21408096408096408,
+                                          0.17751842751842753,
+                                          0.021966771966771968,
+                                          0.14584064584064585,
+                                          0.020562770562770564
+                                    ],
+                                    [
+                                          1.0,
+                                          2.5,
+                                          4.0,
+                                          5.5,
+                                          7.0,
+                                          8.5,
+                                          10.0,
+                                          11.5,
+                                          13.0,
+                                          14.5,
+                                          16.0
+                                    ]
+                              ],
+                              "feature_type": "num",
+                              "stattest_name": "Wasserstein distance (normed)",
+                              "drift_score": 0.015733057219445745,
+                              "drift_detected": false
+                        },
+                        "fnlwgt": {
+                              "current_small_hist": [
+                                    [
+                                          2.6108486745739116e-06,
+                                          3.855432152850622e-06,
+                                          1.164551207363903e-06,
+                                          2.71946389938415e-07,
+                                          4.65493820615305e-08,
+                                          2.1233051466663014e-08,
+                                          4.083279128204429e-09,
+                                          2.4499674769226577e-09,
+                                          0.0,
+                                          8.166558256408867e-10
+                                    ],
+                                    [
+                                          14878.0,
+                                          140224.1,
+                                          265570.2,
+                                          390916.30000000005,
+                                          516262.4,
+                                          641608.5,
+                                          766954.6000000001,
+                                          892300.7000000001,
+                                          1017646.8,
+                                          1142992.9000000001,
+                                          1268339.0
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          2.7521352958388583e-06,
+                                          3.184801000641589e-06,
+                                          7.258771741731766e-07,
+                                          1.0071694781220596e-07,
+                                          1.9368643810039605e-08,
+                                          3.873728762007921e-09,
+                                          2.085853948773496e-09,
+                                          1.4898956776953544e-09,
+                                          2.979791355390709e-10,
+                                          8.939374066172127e-10
+                                    ],
+                                    [
+                                          12285.0,
+                                          159527.0,
+                                          306769.0,
+                                          454011.0,
+                                          601253.0,
+                                          748495.0,
+                                          895737.0,
+                                          1042979.0,
+                                          1190221.0,
+                                          1337463.0,
+                                          1484705.0
+                                    ]
+                              ],
+                              "feature_type": "num",
+                              "stattest_name": "Wasserstein distance (normed)",
+                              "drift_score": 0.010838105222680496,
+                              "drift_detected": false
+                        },
+                        "hours-per-week": {
+                              "current_small_hist": [
+                                    [
+                                          0.002256199849168862,
+                                          0.007134187486029318,
+                                          0.007134187486029318,
+                                          0.054566611166935806,
+                                          0.010246907648308585,
+                                          0.01216885566797094,
+                                          0.005932969973740338,
+                                          0.0015772508204837882,
+                                          0.0005640499622922156,
+                                          0.000459596265571435
+                                    ],
+                                    [
+                                          1.0,
+                                          10.8,
+                                          20.6,
+                                          30.400000000000002,
+                                          40.2,
+                                          50.0,
+                                          59.800000000000004,
+                                          69.60000000000001,
+                                          79.4,
+                                          89.2,
+                                          99.0
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          0.002328063552553348,
+                                          0.006755861347698081,
+                                          0.00731549200936956,
+                                          0.05601231366537488,
+                                          0.009571922837228963,
+                                          0.012141746835624382,
+                                          0.005497811620260597,
+                                          0.0013296824521314321,
+                                          0.0006626027034190301,
+                                          0.0004253193028703234
+                                    ],
+                                    [
+                                          1.0,
+                                          10.8,
+                                          20.6,
+                                          30.400000000000002,
+                                          40.2,
+                                          50.0,
+                                          59.800000000000004,
+                                          69.60000000000001,
+                                          79.4,
+                                          89.2,
+                                          99.0
+                                    ]
+                              ],
+                              "feature_type": "num",
+                              "stattest_name": "Wasserstein distance (normed)",
+                              "drift_score": 0.021439501733838528,
+                              "drift_detected": false
+                        },
+                        "country": {
+                              "current_small_hist": [
+                                    [
+                                          178,
+                                          5,
+                                          37,
+                                          23,
+                                          13,
+                                          30,
+                                          19,
+                                          8,
+                                          30,
+                                          25,
+                                          8,
+                                          42,
+                                          8,
+                                          17,
+                                          12,
+                                          0,
+                                          5,
+                                          9,
+                                          3,
+                                          31,
+                                          14,
+                                          6,
+                                          23,
+                                          25,
+                                          15,
+                                          6,
+                                          175,
+                                          11,
+                                          1,
+                                          9,
+                                          51,
+                                          17,
+                                          9,
+                                          29,
+                                          5,
+                                          18,
+                                          16,
+                                          7,
+                                          5,
+                                          8807,
+                                          13,
+                                          4
+                                    ],
+                                    [
+                                          " ?",
+                                          " Cambodia",
+                                          " Canada",
+                                          " China",
+                                          " Columbia",
+                                          " Cuba",
+                                          " Dominican-Republic",
+                                          " Ecuador",
+                                          " El-Salvador",
+                                          " England",
+                                          " France",
+                                          " Germany",
+                                          " Greece",
+                                          " Guatemala",
+                                          " Haiti",
+                                          " Holand-Netherlands",
+                                          " Honduras",
+                                          " Hong",
+                                          " Hungary",
+                                          " India",
+                                          " Iran",
+                                          " Ireland",
+                                          " Italy",
+                                          " Jamaica",
+                                          " Japan",
+                                          " Laos",
+                                          " Mexico",
+                                          " Nicaragua",
+                                          " Outlying-US(Guam-USVI-etc)",
+                                          " Peru",
+                                          " Philippines",
+                                          " Poland",
+                                          " Portugal",
+                                          " Puerto-Rico",
+                                          " Scotland",
+                                          " South",
+                                          " Taiwan",
+                                          " Thailand",
+                                          " Trinadad&Tobago",
+                                          " United-States",
+                                          " Vietnam",
+                                          " Yugoslavia"
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          405,
+                                          14,
+                                          84,
+                                          52,
+                                          46,
+                                          65,
+                                          51,
+                                          20,
+                                          76,
+                                          65,
+                                          21,
+                                          95,
+                                          21,
+                                          47,
+                                          32,
+                                          1,
+                                          8,
+                                          11,
+                                          10,
+                                          69,
+                                          29,
+                                          18,
+                                          50,
+                                          56,
+                                          47,
+                                          12,
+                                          468,
+                                          23,
+                                          13,
+                                          22,
+                                          147,
+                                          43,
+                                          28,
+                                          85,
+                                          7,
+                                          62,
+                                          35,
+                                          11,
+                                          14,
+                                          20363,
+                                          54,
+                                          12
+                                    ],
+                                    [
+                                          " ?",
+                                          " Cambodia",
+                                          " Canada",
+                                          " China",
+                                          " Columbia",
+                                          " Cuba",
+                                          " Dominican-Republic",
+                                          " Ecuador",
+                                          " El-Salvador",
+                                          " England",
+                                          " France",
+                                          " Germany",
+                                          " Greece",
+                                          " Guatemala",
+                                          " Haiti",
+                                          " Holand-Netherlands",
+                                          " Honduras",
+                                          " Hong",
+                                          " Hungary",
+                                          " India",
+                                          " Iran",
+                                          " Ireland",
+                                          " Italy",
+                                          " Jamaica",
+                                          " Japan",
+                                          " Laos",
+                                          " Mexico",
+                                          " Nicaragua",
+                                          " Outlying-US(Guam-USVI-etc)",
+                                          " Peru",
+                                          " Philippines",
+                                          " Poland",
+                                          " Portugal",
+                                          " Puerto-Rico",
+                                          " Scotland",
+                                          " South",
+                                          " Taiwan",
+                                          " Thailand",
+                                          " Trinadad&Tobago",
+                                          " United-States",
+                                          " Vietnam",
+                                          " Yugoslavia"
+                                    ]
+                              ],
+                              "feature_type": "cat",
+                              "stattest_name": "Jensen-Shannon distance",
+                              "drift_score": 0.022851033108537377,
+                              "drift_detected": false
+                        },
+                        "education": {
+                              "current_small_hist": [
+                                    [
+                                          284,
+                                          344,
+                                          140,
+                                          40,
+                                          103,
+                                          203,
+                                          160,
+                                          316,
+                                          408,
+                                          1583,
+                                          117,
+                                          3182,
+                                          509,
+                                          15,
+                                          169,
+                                          2196
+                                    ],
+                                    [
+                                          " 10th",
+                                          " 11th",
+                                          " 12th",
+                                          " 1st-4th",
+                                          " 5th-6th",
+                                          " 7th-8th",
+                                          " 9th",
+                                          " Assoc-acdm",
+                                          " Assoc-voc",
+                                          " Bachelors",
+                                          " Doctorate",
+                                          " HS-grad",
+                                          " Masters",
+                                          " Preschool",
+                                          " Prof-school",
+                                          " Some-college"
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          649,
+                                          831,
+                                          293,
+                                          128,
+                                          230,
+                                          443,
+                                          354,
+                                          751,
+                                          974,
+                                          3772,
+                                          296,
+                                          7319,
+                                          1214,
+                                          36,
+                                          407,
+                                          5095
+                                    ],
+                                    [
+                                          " 10th",
+                                          " 11th",
+                                          " 12th",
+                                          " 1st-4th",
+                                          " 5th-6th",
+                                          " 7th-8th",
+                                          " 9th",
+                                          " Assoc-acdm",
+                                          " Assoc-voc",
+                                          " Bachelors",
+                                          " Doctorate",
+                                          " HS-grad",
+                                          " Masters",
+                                          " Preschool",
+                                          " Prof-school",
+                                          " Some-college"
+                                    ]
+                              ],
+                              "feature_type": "cat",
+                              "stattest_name": "Jensen-Shannon distance",
+                              "drift_score": 0.012011632654065654,
+                              "drift_detected": false
+                        },
+                        "marital-status": {
+                              "current_small_hist": [
+                                    [
+                                          1353,
+                                          5,
+                                          4452,
+                                          140,
+                                          3192,
+                                          317,
+                                          310
+                                    ],
+                                    [
+                                          " Divorced",
+                                          " Married-AF-spouse",
+                                          " Married-civ-spouse",
+                                          " Married-spouse-absent",
+                                          " Never-married",
+                                          " Separated",
+                                          " Widowed"
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          3090,
+                                          18,
+                                          10524,
+                                          278,
+                                          7491,
+                                          708,
+                                          683
+                                    ],
+                                    [
+                                          " Divorced",
+                                          " Married-AF-spouse",
+                                          " Married-civ-spouse",
+                                          " Married-spouse-absent",
+                                          " Never-married",
+                                          " Separated",
+                                          " Widowed"
+                                    ]
+                              ],
+                              "feature_type": "cat",
+                              "stattest_name": "Jensen-Shannon distance",
+                              "drift_score": 0.009857947249892397,
+                              "drift_detected": false
+                        },
+                        "occupation": {
+                              "current_small_hist": [
+                                    [
+                                          569,
+                                          1118,
+                                          3,
+                                          1211,
+                                          1209,
+                                          294,
+                                          409,
+                                          567,
+                                          1016,
+                                          41,
+                                          1246,
+                                          223,
+                                          1069,
+                                          280,
+                                          514
+                                    ],
+                                    [
+                                          " ?",
+                                          " Adm-clerical",
+                                          " Armed-Forces",
+                                          " Craft-repair",
+                                          " Exec-managerial",
+                                          " Farming-fishing",
+                                          " Handlers-cleaners",
+                                          " Machine-op-inspct",
+                                          " Other-service",
+                                          " Priv-house-serv",
+                                          " Prof-specialty",
+                                          " Protective-serv",
+                                          " Sales",
+                                          " Tech-support",
+                                          " Transport-moving"
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          1274,
+                                          2652,
+                                          6,
+                                          2888,
+                                          2857,
+                                          700,
+                                          961,
+                                          1435,
+                                          2279,
+                                          108,
+                                          2894,
+                                          426,
+                                          2581,
+                                          648,
+                                          1083
+                                    ],
+                                    [
+                                          " ?",
+                                          " Adm-clerical",
+                                          " Armed-Forces",
+                                          " Craft-repair",
+                                          " Exec-managerial",
+                                          " Farming-fishing",
+                                          " Handlers-cleaners",
+                                          " Machine-op-inspct",
+                                          " Other-service",
+                                          " Priv-house-serv",
+                                          " Prof-specialty",
+                                          " Protective-serv",
+                                          " Sales",
+                                          " Tech-support",
+                                          " Transport-moving"
+                                    ]
+                              ],
+                              "feature_type": "cat",
+                              "stattest_name": "Jensen-Shannon distance",
+                              "drift_score": 0.017081369776828493,
+                              "drift_detected": false
+                        },
+                        "race": {
+                              "current_small_hist": [
+                                    [
+                                          106,
+                                          291,
+                                          895,
+                                          79,
+                                          8398
+                                    ],
+                                    [
+                                          " Amer-Indian-Eskimo",
+                                          " Asian-Pac-Islander",
+                                          " Black",
+                                          " Other",
+                                          " White"
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          205,
+                                          748,
+                                          2229,
+                                          192,
+                                          19418
+                                    ],
+                                    [
+                                          " Amer-Indian-Eskimo",
+                                          " Asian-Pac-Islander",
+                                          " Black",
+                                          " Other",
+                                          " White"
+                                    ]
+                              ],
+                              "feature_type": "cat",
+                              "stattest_name": "Jensen-Shannon distance",
+                              "drift_score": 0.011872580725988298,
+                              "drift_detected": false
+                        },
+                        "relationship": {
+                              "current_small_hist": [
+                                    [
+                                          3907,
+                                          2550,
+                                          272,
+                                          1519,
+                                          1035,
+                                          486
+                                    ],
+                                    [
+                                          " Husband",
+                                          " Not-in-family",
+                                          " Other-relative",
+                                          " Own-child",
+                                          " Unmarried",
+                                          " Wife"
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          9286,
+                                          5755,
+                                          709,
+                                          3549,
+                                          2411,
+                                          1082
+                                    ],
+                                    [
+                                          " Husband",
+                                          " Not-in-family",
+                                          " Other-relative",
+                                          " Own-child",
+                                          " Unmarried",
+                                          " Wife"
+                                    ]
+                              ],
+                              "feature_type": "cat",
+                              "stattest_name": "Jensen-Shannon distance",
+                              "drift_score": 0.010553245588641506,
+                              "drift_detected": false
+                        },
+                        "salary": {
+                              "current_small_hist": [
+                                    [
+                                          7455,
+                                          2314
+                                    ],
+                                    [
+                                          " <=50K",
+                                          " >50K"
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          17265,
+                                          5527
+                                    ],
+                                    [
+                                          " <=50K",
+                                          " >50K"
+                                    ]
+                              ],
+                              "feature_type": "cat",
+                              "stattest_name": "Jensen-Shannon distance",
+                              "drift_score": 0.004659219588203162,
+                              "drift_detected": false
+                        },
+                        "sex": {
+                              "current_small_hist": [
+                                    [
+                                          3238,
+                                          6531
+                                    ],
+                                    [
+                                          " Female",
+                                          " Male"
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          7533,
+                                          15259
+                                    ],
+                                    [
+                                          " Female",
+                                          " Male"
+                                    ]
+                              ],
+                              "feature_type": "cat",
+                              "stattest_name": "Jensen-Shannon distance",
+                              "drift_score": 0.0007107198044025005,
+                              "drift_detected": false
+                        },
+                        "workclass": {
+                              "current_small_hist": [
+                                    [
+                                          569,
+                                          291,
+                                          648,
+                                          0,
+                                          6814,
+                                          319,
+                                          745,
+                                          379,
+                                          4
+                                    ],
+                                    [
+                                          " ?",
+                                          " Federal-gov",
+                                          " Local-gov",
+                                          " Never-worked",
+                                          " Private",
+                                          " Self-emp-inc",
+                                          " Self-emp-not-inc",
+                                          " State-gov",
+                                          " Without-pay"
+                                    ]
+                              ],
+                              "ref_small_hist": [
+                                    [
+                                          1267,
+                                          669,
+                                          1445,
+                                          7,
+                                          15882,
+                                          797,
+                                          1796,
+                                          919,
+                                          10
+                                    ],
+                                    [
+                                          " ?",
+                                          " Federal-gov",
+                                          " Local-gov",
+                                          " Never-worked",
+                                          " Private",
+                                          " Self-emp-inc",
+                                          " Self-emp-not-inc",
+                                          " State-gov",
+                                          " Without-pay"
+                                    ]
+                              ],
+                              "feature_type": "cat",
+                              "stattest_name": "Jensen-Shannon distance",
+                              "drift_score": 0.013311121484948875,
+                              "drift_detected": false
+                        }
+                  }
+            }
+      },
+      "timestamp": "2022-08-10 00:21:22.906744"
+}

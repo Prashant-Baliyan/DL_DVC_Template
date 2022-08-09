@@ -49,13 +49,13 @@ class DataIngestion:
             y_train_new = pd.DataFrame(y_train)
             x_frame = [X_train,y_train_new]
 
-            strat_train_set = pd.concat(x_frame)
+            strat_train_set = pd.concat(x_frame,axis= 1)
 
             
             y_test_new = pd.DataFrame(y_test)
             y_frame = [X_test,y_test_new]
 
-            strat_test_set = pd.concat(y_frame)
+            strat_test_set = pd.concat(y_frame,axis= 1)
 
             #     strat_train_set = incompred_data_frame.loc[train_index].drop(["salary"],axis=1)
             #     strat_test_set = incompred_data_frame.loc[test_index].drop(["salary"],axis=1)
