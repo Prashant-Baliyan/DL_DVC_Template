@@ -1,7 +1,7 @@
 {
       "data_drift": {
             "name": "data_drift",
-            "datetime": "2022-08-10 00:21:22.905744",
+            "datetime": "2022-08-10 22:42:59.468682",
             "data": {
                   "utility_columns": {
                         "date": null,
@@ -584,7 +584,7 @@
                               ],
                               "feature_type": "cat",
                               "stattest_name": "Jensen-Shannon distance",
-                              "drift_score": 0.022851033108537377,
+                              "drift_score": 0.02285103310853834,
                               "drift_detected": false
                         },
                         "education": {
@@ -666,7 +666,7 @@
                               ],
                               "feature_type": "cat",
                               "stattest_name": "Jensen-Shannon distance",
-                              "drift_score": 0.012011632654065654,
+                              "drift_score": 0.012011632654063267,
                               "drift_detected": false
                         },
                         "marital-status": {
@@ -712,7 +712,7 @@
                               ],
                               "feature_type": "cat",
                               "stattest_name": "Jensen-Shannon distance",
-                              "drift_score": 0.009857947249892397,
+                              "drift_score": 0.009857947249892394,
                               "drift_detected": false
                         },
                         "occupation": {
@@ -790,7 +790,7 @@
                               ],
                               "feature_type": "cat",
                               "stattest_name": "Jensen-Shannon distance",
-                              "drift_score": 0.017081369776828493,
+                              "drift_score": 0.0170813697768285,
                               "drift_detected": false
                         },
                         "race": {
@@ -828,7 +828,7 @@
                               ],
                               "feature_type": "cat",
                               "stattest_name": "Jensen-Shannon distance",
-                              "drift_score": 0.011872580725988298,
+                              "drift_score": 0.01187258072598829,
                               "drift_detected": false
                         },
                         "relationship": {
@@ -870,7 +870,7 @@
                               ],
                               "feature_type": "cat",
                               "stattest_name": "Jensen-Shannon distance",
-                              "drift_score": 0.010553245588641506,
+                              "drift_score": 0.01055324558864146,
                               "drift_detected": false
                         },
                         "salary": {
@@ -976,11 +976,11 @@
                               ],
                               "feature_type": "cat",
                               "stattest_name": "Jensen-Shannon distance",
-                              "drift_score": 0.013311121484948875,
+                              "drift_score": 0.013311121484950117,
                               "drift_detected": false
                         }
                   }
             }
       },
-      "timestamp": "2022-08-10 00:21:22.906744"
+      "timestamp": "2022-08-10 22:42:59.470819"
 }

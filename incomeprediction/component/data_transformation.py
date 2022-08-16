@@ -40,7 +40,7 @@ class datatransformation():
             self.data_transformation_config= data_transformation_config
             self.schema_file_path = self.data_validation_artifact.schema_file_path
         except Exception as e:
-            raise incomepredictionexception (e,sys) from e
+            raise incomepredictionexception (e,sys) from e 
 
     # def remove_null_values(self):
     #     try:
@@ -117,6 +117,7 @@ class datatransformation():
 
     def get_data_transformer_object(self)->ColumnTransformer:
         try:
+
             schema_file_path = self.data_validation_artifact.schema_file_path
 
             dataset_schema = read_yaml_file(file_path=schema_file_path)
@@ -133,8 +134,8 @@ class datatransformation():
 
             cat_pipeline = Pipeline(steps=[
                  ('impute', SimpleImputer(strategy="most_frequent")),
-                 ('one_hot_encoder', LabelEncoder()),
-                 ('scaler', StandardScaler(with_mean=False))
+                 #('one_hot_encoder',  OneHotEncoder()),
+                 #('scaler', StandardScaler(with_mean=False))
             ]
             )
 
@@ -154,6 +155,9 @@ class datatransformation():
         try:
             #self.feature_scaling()
             #balance_train_df = self.handling_imbalance_data()
+            schema_file_path = self.data_validation_artifact.schema_file_path
+            dataset_schema = read_yaml_file(file_path=schema_file_path)
+            categorical_columns = dataset_schema[CATEGORICAL_COLUMN_KEY]
 
             logging.info(f"Obtaining preprocessing object.")
             preprocessing_obj = self.get_data_transformer_object()
@@ -166,10 +170,10 @@ class datatransformation():
             schema_file_path = self.data_validation_artifact.schema_file_path
 
             train_df = load_data(file_path=train_file_path, schema_file_path=schema_file_path)
-            new_train_df = train_df.replace('?', np.nan)
+            new_train_df = train_df.replace(' ?', np.nan)
             
             test_df = load_data(file_path=test_file_path, schema_file_path=schema_file_path)
-            new_test_df = test_df.replace('?', np.nan)
+            new_test_df = test_df.replace(' ?', np.nan)
 
             schema = read_yaml_file(file_path=schema_file_path)
 
@@ -179,8 +183,16 @@ class datatransformation():
             input_feature_train_df = new_train_df.drop(columns=[target_column_name],axis=1)
             target_feature_train_df = new_train_df[target_column_name]
 
+            for col in input_feature_train_df[categorical_columns]:
+                df_frequency_map = input_feature_train_df[col].value_counts().to_dict()
+                input_feature_train_df[col] = input_feature_train_df[col].map(df_frequency_map)
+
             input_feature_test_df = new_test_df.drop(columns=[target_column_name],axis=1)
             target_feature_test_df = new_test_df[target_column_name]
+
+            for col in input_feature_test_df[categorical_columns]:
+                df_frequency_map = input_feature_test_df[col].value_counts().to_dict()
+                input_feature_test_df[col] = input_feature_test_df[col].map(df_frequency_map)
 
             input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
