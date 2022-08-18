@@ -91,27 +91,28 @@ class datatransformation():
     #     except Exception as e:
     #         raise incomepredictionexception (e,sys) from e
     
-    def handling_imbalance_data(self):
+    def handling_imbalance_data(self,train_arr):
         try:
             rs = RandomOverSampler(random_state=30)
             train_file_path = self.data_ingestion_artifact.train_file_path
-            test_file_path = self.data_ingestion_artifact.test_file_path
             schema_file_path = self.data_validation_artifact.schema_file_path
-
-            train_df = load_data(file_path=train_file_path, schema_file_path=schema_file_path)
-            
-            test_df = load_data(file_path=test_file_path, schema_file_path=schema_file_path)
-
+            train_df = load_data(file_path=train_file_path, schema_file_path=schema_file_path)           
             schema = read_yaml_file(file_path=schema_file_path)
             target_column_name = schema[TARGET_COLUMN_KEY]
+            train_arr = train_arr
+            trasnformed_train_df = pd.DataFrame(train_arr, columns = train_df.columns)
+
             logging.info(f"Splitting input and target feature from training and testing dataframe.")
-            input_feature_X_df = train_df.drop(columns=[target_column_name],axis=1)
-            
-            input_feature_Y_df = test_df[target_column_name]
-            
+            x = trasnformed_train_df.iloc[:,:-1]
+            y = trasnformed_train_df[target_column_name]
+            rs.fit(x,y)
             # rs.fit(input_feature_X_df,input_feature_Y_df)
-            X_new,y_new_df = rs.fit_resample(input_feature_X_df, input_feature_Y_df)
-            return y_new_df
+            X_new,y_new = rs.fit_resample(x,y)
+            y_new_df = pd.DataFrame(y_new)
+            x_frame = [X_new,y_new_df]
+            fianl_train_dataframe = pd.concat(x_frame,axis= 1)
+            final_train_arr = np.array(fianl_train_dataframe)
+            return final_train_arr
         except Exception as e:
             raise incomepredictionexception(e,sys) from e
 
@@ -154,7 +155,7 @@ class datatransformation():
     def initiate_data_transformation(self)->DataTransformationArtifact:
         try:
             #self.feature_scaling()
-            #balance_train_df = self.handling_imbalance_data()
+            
             schema_file_path = self.data_validation_artifact.schema_file_path
             dataset_schema = read_yaml_file(file_path=schema_file_path)
             categorical_columns = dataset_schema[CATEGORICAL_COLUMN_KEY]
@@ -171,7 +172,7 @@ class datatransformation():
 
             train_df = load_data(file_path=train_file_path, schema_file_path=schema_file_path)
             new_train_df = train_df.replace(' ?', np.nan)
-            
+
             test_df = load_data(file_path=test_file_path, schema_file_path=schema_file_path)
             new_test_df = test_df.replace(' ?', np.nan)
 
@@ -201,7 +202,9 @@ class datatransformation():
             train_arr = np.c_[ input_feature_train_arr, np.array(target_feature_train_df)]
 
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
-            
+
+            balance_train_arr = self.handling_imbalance_data(train_arr=train_arr)
+
             transformed_train_dir = self.data_transformation_config.transformed_train_dir
             transformed_test_dir = self.data_transformation_config.transformed_test_dir
 
@@ -213,7 +216,7 @@ class datatransformation():
 
             logging.info(f"Saving transformed training and testing array.")
             
-            save_numpy_array_data(file_path=transformed_train_file_path,array=train_arr)
+            save_numpy_array_data(file_path=transformed_train_file_path,array=balance_train_arr)
             save_numpy_array_data(file_path=transformed_test_file_path,array=test_arr)
 
             preprocessing_obj_file_path = self.data_transformation_config.preprocessed_object_file_path
