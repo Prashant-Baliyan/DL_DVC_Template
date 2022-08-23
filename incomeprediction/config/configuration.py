@@ -174,9 +174,9 @@ class configuration:
             base_accuracy = model_trainer_config_info[MODEL_TRAINER_BASE_ACCURACY_KEY]
 
             model_trainer_config = ModelTrainerConfig(
-                                                     trained_model_file_path=trained_model_file_path,
-                                                     base_accuracy=base_accuracy,
-                                                     model_config_file_path=model_config_file_path
+                                            trained_model_file_path=trained_model_file_path,
+                                            base_accuracy=base_accuracy,
+                                            model_config_file_path=model_config_file_path
             )
             logging.info(f"Model trainer config: {model_trainer_config}")
             return model_trainer_config

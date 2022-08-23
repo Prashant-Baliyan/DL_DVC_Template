@@ -6,10 +6,11 @@ import pandas as pd
 from incomeprediction.config.configuration import configuration
 from incomeprediction.logger import logging
 from incomeprediction.exception import incomepredictionexception
-from incomeprediction.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact
+from incomeprediction.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact,ModelTrainerArtifact
 from incomeprediction.component.data_ingestion import DataIngestion
 from incomeprediction.component.data_validation import DataValidation
 from incomeprediction.component.data_transformation import datatransformation
+from incomeprediction.component.model_trainer import ModelTrainer
 
 from incomeprediction.constant import EXPERIMENT_DIR_NAME, EXPERIMENT_FILE_NAME
 
@@ -62,6 +63,16 @@ class Pipeline():
             return data_transformation.initiate_data_transformation()
         except Exception as e:
             raise incomepredictionexception(e, sys)
+
+    def start_model_trainer(self, data_transformation_artifact: DataTransformationArtifact) -> ModelTrainerArtifact:
+        try:
+            model_trainer = ModelTrainer(model_trainer_config=self.config.get_model_trainer_config(),
+                                         data_transformation_artifact=data_transformation_artifact
+                                         )
+            return model_trainer.initiate_model_trainer()
+        except Exception as e:
+            raise incomepredictionexception(e, sys) from e
+
 
     def run(self):
         try:
