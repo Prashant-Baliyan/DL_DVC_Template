@@ -13,11 +13,11 @@ def get_requirements_list()-> List[str]:
         requirement_file.readlines().remove("-e .")
 
 #Declaring variable for setup function
-PROJECTNAME = "Adult_Census_Income_Prediction"
+PROJECTNAME = "DL_DVC_TEMPLATE"
 VERSION = "0.0.3"
 AUTHOR = "Prashant Baliyan"
 DESCRIPTION = "The Goal is to predict whether a person has an income of more than 50K a year or not."
-PACKAGES = "Adult_Census_Income_Prediction"
+PACKAGES = "DL_DVC_TEMPLATE"
 REQUIREMENTS_FILE_NAME = 'requirements.txt'
 
 setup(
